@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1 class="font-italic">Perfil de {{ user.username }}</h1><br>
+        {#{{ dump(users) }}#}
+
+        <h4 class="font-weight-bold"> Id:</h4><br>
+        <h5>{{ user.id }}</h5><br>
+        <h4 class="font-weight-bold">Email:</h4><br>
+        <h5>{{ user.email }}</h5><br>
+        <h4 class="font-weight-bold">Rol:</h4><br>
+        {% for role in user.roles %}
+            <h5>{{ role }}</h5><br>
+        {% endfor%}
+
+        <a class="btn btn-info" href="{{ path('app_admin_users_edit', {'id':user.id}) }}">Edit</a></button>
+        <a class="btn btn-danger" href="{{ path('app_admin_users_delete',{'id':user.id}) }}" onclick="return confirm('¿Estás seguro?')">Delete</a>
+        <a class="btn btn-dark" href="{{ path('app_admin_users') }}">Volver</a></button>
+    {% endif %}
+{% endblock %}

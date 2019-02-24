@@ -55,6 +55,7 @@ class UserController extends AbstractController
         //renderizar formulario
         return $this->render('user/regform.html.twig',[
             'error'=>$error,
+            //'form' es el nombre para construir el formulario en la plantilla
             'form'=>$form->createView()
         ]);
 

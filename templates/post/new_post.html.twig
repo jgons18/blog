@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-lg-6 box-form">
+        <h1>Add a new post</h1>
+        {{form_start(form)}}
+        {{ form_widget(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.tags) }}
+        <br>
+        <input type="submit" class="btn btn-success" value="Crear post">
+        <a class="btn btn-danger" href="{{ path('post') }}">Cancelar</a></button>
+        {{ form_errors(form) }}
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{asset("js/bootstrap-tagsinput.min.js")}}"></script>
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector:'#post_content'
+        });
+    </script>
+{%endblock%}

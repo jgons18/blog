@@ -1,10 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ parent() }}
-    <div class="row">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-    </div>
+
+    <h2>Posts más recientes:</h2>
+    {% if app.user %}
+        <p><a href="{{ path('new_post') }}">+ Añadir nuevo post</a></p>
+    {% endif %}
+    {% for post in posts %}
+        <div class="card" style="width: 18rem; display: inline-block;">
+                <div class="card-body">
+                    <h3 class="card-title">{{ post.title }}</h3>
+                    {% for hastag in post.tags %}
+                        <p class="tag badge badge-info">{{ hastag.tag }}</p>
+                    {% endfor %}
+                    <br><small class="text-muted">{{ post.author }} | {{ post.createAt|date('Y-m-d H:i:s') }}</small>
+                    <p class="card-text text-justify">{{ post.content [:200]| raw }}...</p>
+                    <a href="{{ path('view_post', {'id':post.id}) }}" class="btn btn-primary">Leer más</a>
+                    {# {{ dump(post.user) }} #}
+                     {% if user == post.user %}
+                        <a href="{{ path('edit_post', {'id':post.id}) }}" class="btn btn-success">Edit</a>
+                        <a href="{{ path('del_post', {'id':post.id}) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Delete</a>
+                    {% endif %}
+                </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{asset("js/bootstrap-tagsinput.min.js")}}"></script>
+    <script src="{{asset("css/bootstrap-tagsinput.css")}}"></script>
+{%endblock%}

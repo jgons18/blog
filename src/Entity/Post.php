@@ -30,7 +30,7 @@ class Post
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts" ,cascade={"persist"} )
      */
     private $tags;
 
@@ -68,6 +68,7 @@ class Post
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createAt = new \DateTime();
     }
 
     public function getId(): ?int

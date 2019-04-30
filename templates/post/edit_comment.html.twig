@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col-lg-4 box-form">
+        <h2>Edit comment</h2>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}<br>
+        <input type="submit" class="btn btn-success" value="Guardar cambios">
+        <a class="btn btn-danger" href="{{ path('post') }}">Cancelar</a></button>
+        {{ form_errors(form) }}
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

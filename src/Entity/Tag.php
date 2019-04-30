@@ -77,4 +77,14 @@ class Tag
 
         return $this;
     }
+
+    /**
+     * Función para convertir a string el array de tags para poder editarlos
+     * @return mixed
+     */
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->tag;
+    }
 }

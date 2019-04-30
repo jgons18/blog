@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Post de {{ post.title }}:</h2>
+    <h6>by {{ post.author }} | {{ post.createAt|date('Y-m-d H:i:s') }}</h6>
+    {% if app.user %}
+        <p><a href="{{ path('new_post') }}">+ Añadir nuevo post</a> |
+            <a href="{{ path('edit_post', {'id':post.id}) }}" class="text-success">Edit </a>| <a href="{{ path('del_post', {'id':post.id}) }}" class="text-danger" onclick="return confirm('¿Estás seguro?')">Delete</a></p>
+
+    {% endif %}
+    {% for hastag in post.tags %}
+        <p class="tag badge badge-info">{{ hastag.tag }}</p>
+    {% endfor %}
+   {# {% if user == post.user %}#}
+        <small class="text-muted"></small>
+        <p class="text-left">{{ post.content }}</p>
+{#{% if app.user %}#}
+            {% for comment in comments %}
+            <div class="card">
+
+            <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                </div>
+                <div class="col-md-10">
+                    <!--<p>
+                        <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{#{{ post.author }}#}</strong></a>
+                        <span class="float-right">{# {{ post.comments }}#}<i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                    </p>-->
+                    <div class="clearfix"></div>
+                        <!--<p>{# {{ comment.id }} #}</p>-->
+                        <p>{{ comment.user.username }}</p>
+                        <p>
+                            <p>{{ comment.comment }}</p>
+                            <!--<a class="float-right btn btn-default">Reply</a>
+                            <a class="float-right btn text-white btn-info">Like</a></p>-->
+                            {% if user == comment.user %}
+                                <a href="{{ path('del_comment', {'id':comment.id}) }}" class="float-right btn btn-danger" onclick="return confirm('¿Estás seguro?')">Delete</a>
+                                <a href="{{ path('edit_comment', {'id':comment.id}) }}" class="float-right btn btn-success">Edit</a>
+
+                            {% endif %}
+
+
+                </div>
+            </div>
+            </div>
+            </div>
+            <br>
+            {% endfor %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="col-lg-6 box-form">
+                    {{ form_start(form) }}
+                    {{ form_row(form.comment) }}
+                    {{ form_errors(form) }}
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
+
+{#{% endif %}#}
+{#{% endif %}#}
+
+{% endblock %}

@@ -4,8 +4,17 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 {% endblock %}
 {% block body %}
-    <h1>Blog</h1>
+    <h1>Bienvenido al Blog</h1>
     <br>
+    <p>¿No eres usuario aún?Regístrate!</p>
+    <div class="container">
+        <p>
+            <a href="{{ path('app_register') }}" class="btn btn-primary">Sing up</a>
+        <a href="{{ path('app_login') }}" class="btn btn-secondary">Log in</a>
 
+        </p>
+    </div>
 
 {% endblock %}
+
+

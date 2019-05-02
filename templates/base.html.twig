@@ -19,7 +19,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ path('app_homepage') }}">Inicio <span class="sr-only">(current)</span></a>
                         </li>
                         {% if app.user is null %}
                         <li class="nav-item">
@@ -40,11 +40,18 @@
                                     <a class="nav-link" href="{{ path('app_admin_users') }}">Admin</a>
                                 </li>
                             {% endif %}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('mis_posts', {'id':app.user.id}) }}">Mis posts</a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('post') }}">Post</a>
+                                <a class="nav-link" href="{{ path('post') }}">Posts</a>
                             </li>
+
                         </li>
                         {% endif %}
+
                     </ul>
                     <form class="form-inline mt-2 mt-md-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

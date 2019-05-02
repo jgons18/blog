@@ -4,10 +4,13 @@
 
     <h2>Post de {{ post.title }}:</h2>
     <h6>by {{ post.author }} | {{ post.createAt|date('Y-m-d H:i:s') }}</h6>
-    {% if app.user %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {#{% if app.user %}#}
+        {% if user == post.user or is_granted('ROLE_ADMIN')%}
         <p><a href="{{ path('new_post') }}">+ Añadir nuevo post</a> |
             <a href="{{ path('edit_post', {'id':post.id}) }}" class="text-success">Edit </a>| <a href="{{ path('del_post', {'id':post.id}) }}" class="text-danger" onclick="return confirm('¿Estás seguro?')">Delete</a></p>
 
+    {% endif %}
     {% endif %}
     {% for hastag in post.tags %}
         <p class="tag badge badge-info">{{ hastag.tag }}</p>

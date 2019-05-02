@@ -27,6 +27,17 @@ class PostController extends AbstractController
             'user'=>$user,
             'posts'=>$posts]);
     }
+    /**
+     * Función para listar mis posts
+     * @Route("/misposts/{id}", name="mis_posts")
+     */
+    public function misPosts($id){
+        $posts=$this->getDoctrine()->getRepository(Post::class)->findBy(array('user'=>$id));
+        return $this->render('post/mis_posts.html.twig',[
+            'posts'=>$posts,
+            'user'=>$id]);
+
+    }
 
     /**
      * Función para ver cada post ->Botón Leer más
@@ -181,7 +192,7 @@ class PostController extends AbstractController
         $postaeditar=$post[0];
 
         $user=$this->getUser();
-        if(!(in_array("ROLE_ADMIN",$user->getRoles())) && $user->getId() != $post->getUser()->getId()){
+        if(!(in_array("ROLE_USER",$user->getRoles())) && $user->getId() != $post->getUser()->getId()){
             $this->addFlash('warning', 'No puede editar un post ajeno');
             return $this->redirectToRoute('app_homepage');
         }
@@ -235,6 +246,8 @@ class PostController extends AbstractController
         return $this->redirectToRoute('post');
 
     }
+
+
     /*
      * @Route ("/tag/search", name="tag_search")
      * */
